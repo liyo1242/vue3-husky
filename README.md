@@ -58,10 +58,25 @@ npm install prettier pretty-quick --save-dev
 npm install is-ci --save-dev
 ```
 
+- prepare for husky command
+
 ```
 "scripts": {
     ...
     "install:husky": "is-ci || husky install",
     "postinstall": "npm run install:husky"
+},
+```
+
+- prepare for lint command ( All are optional except `"lint:lint-staged"`, which is required. )
+
+```
+"scripts": {
+    ...
+    "lint:eslint": "eslint \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
+    "lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
+    "lint:stylelint": "stylelint --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "lint:pretty": "pretty-quick --staged",
 },
 ```
